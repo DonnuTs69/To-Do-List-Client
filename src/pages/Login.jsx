@@ -14,7 +14,9 @@ const Login = () => {
         password: password,
       })
 
-      console.log(response)
+      localStorage.setItem("auth_token", response.data.token)
+
+      // console.log(response.data.token)
     } catch (err) {
       console.log(err)
     }
