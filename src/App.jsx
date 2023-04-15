@@ -1,10 +1,14 @@
-import { Box, Container } from "@mui/material"
+import { Box, Button, Container } from "@mui/material"
 import ToDoListRoutes from "./Routes"
-import { useState } from "react"
+import Navbar from "./components/Navbar"
 
 function App() {
   return (
     <>
+      {/* <Box>
+        <Button onClick={logoutBtnHandler}>LogOut</Button>
+      </Box> */}
+      <Navbar />
       <ToDoListRoutes />
     </>
   )

@@ -49,7 +49,7 @@ const Register = () => {
             />
             <Typography>Password</Typography>
             <Input
-              type="password"
+              type="text"
               value={passwordInput}
               onChange={(e) => setPasswordInput(e.target.value)}
             />

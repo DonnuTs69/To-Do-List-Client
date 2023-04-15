@@ -1,10 +1,12 @@
 import { Box, Button, Input, Typography } from "@mui/material"
 import { useState } from "react"
 import { axiosInstance } from "../api"
+import { useNavigate, Link } from "react-router-dom"
 
 const Login = () => {
   const [usernameOrEmail, setUsernameOremail] = useState("")
   const [password, setPassword] = useState("")
+  const navigate = useNavigate()
 
   const loginUser = async (e) => {
     e.preventDefault()
@@ -16,7 +18,7 @@ const Login = () => {
 
       localStorage.setItem("auth_token", response.data.token)
 
-      // console.log(response.data.token)
+      navigate("/")
     } catch (err) {
       console.log(err)
     }
@@ -45,13 +47,17 @@ const Login = () => {
             />
             <Typography>Password</Typography>
             <Input
-              type="password"
+              type="text"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </Box>
           <Button type="submit">Submit</Button>
         </form>
+        <Typography>Dont have account?</Typography>
+        <Link to="/register">
+          <Typography>Sign Up</Typography>
+        </Link>
       </Box>
     </>
   )
