@@ -13,7 +13,6 @@ const Navbar = () => {
   const getUserData = async () => {
     const response = await axiosInstance.get("/auth/profile")
     setUserData(response.data)
-    console.log(response)
   }
 
   useEffect(() => {
@@ -29,14 +28,16 @@ const Navbar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography sx={{ flexGrow: 1 }}>TDL</Typography>
+          <Typography sx={{ flexGrow: 1 }}>
+            <Link to="/">TDL</Link>
+          </Typography>
           {!getToken ? (
             <Link to="/login">
               <Typography color="white">Login</Typography>
             </Link>
           ) : (
             <Box>
-              <Typography>{userData.username}</Typography>
+              <Typography>{userData ? userData.username : ""}</Typography>
               <Button sx={{ color: "white" }} onClick={logoutBtnHandler}>
                 Logout
               </Button>
