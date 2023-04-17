@@ -3,6 +3,7 @@ import { axiosInstance } from "../api"
 import { useEffect, useState } from "react"
 import AddIcon from "@mui/icons-material/Add"
 import CreateList from "../components/CreateList"
+import { Link } from "react-router-dom"
 
 const HomePage = () => {
   const [dataUser, setDataUser] = useState({})
@@ -57,7 +58,9 @@ const HomePage = () => {
             borderRadius="10px"
             key={item.id}
           >
-            <Typography variant="h4">{item.title}</Typography>
+            <Link to={`/task/${item.id}`}>
+              <Typography variant="h4">{item.title}</Typography>
+            </Link>
           </Box>
         ))}
       </Box>
