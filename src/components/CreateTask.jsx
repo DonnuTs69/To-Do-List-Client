@@ -17,12 +17,12 @@ const CreateTask = () => {
 
   const [renderTask, setRenderTask] = useState({})
   const [renderStatus, setRenderStatus] = useState([])
-  const [taskList, setTaskList] = useState([{ task: "", status: "" }])
+  const [taskList, setTaskList] = useState([{ description: "", StatusId: "" }])
 
   console.log(taskList)
 
   const handleTaskList = () => {
-    setTaskList([...taskList, { task: "" }])
+    setTaskList([...taskList, { description: "" }])
   }
 
   const removeTaskList = (index) => {
@@ -60,6 +60,19 @@ const CreateTask = () => {
     }
   }
 
+  const createTask = async () => {
+    try {
+      const response = await axiosInstance.post(
+        `/task/create/${params.id}`,
+        taskList
+      )
+
+      console.log(response)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   useEffect(() => {
     getList()
   }, [])
@@ -80,7 +93,7 @@ const CreateTask = () => {
             <Input
               value={singleTask.task}
               onChange={(e) => handleTaskChange(e, index)}
-              name="task"
+              name="description"
             />
             <FormControl sx={{ width: "150px" }}>
               <InputLabel id="status">Status</InputLabel>
@@ -88,7 +101,7 @@ const CreateTask = () => {
                 id="status"
                 label="Status"
                 onChange={(e) => handleTaskChange(e, index)}
-                name="status"
+                name="StatusId"
               >
                 {renderStatus.map((val) => (
                   <MenuItem value={val.id}>{val.status}</MenuItem>
@@ -101,6 +114,7 @@ const CreateTask = () => {
           </Box>
         </Box>
       ))}
+      <Button onClick={() => createTask()}>Submit</Button>
     </Box>
   )
 }
