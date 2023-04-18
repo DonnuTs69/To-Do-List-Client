@@ -91,7 +91,7 @@ const CreateTask = () => {
           <Typography>Input Task</Typography>
           <Box display={"flex"} sx={{ gap: 2 }}>
             <Input
-              value={singleTask.task}
+              value={singleTask.description}
               onChange={(e) => handleTaskChange(e, index)}
               name="description"
             />
@@ -102,6 +102,7 @@ const CreateTask = () => {
                 label="Status"
                 onChange={(e) => handleTaskChange(e, index)}
                 name="StatusId"
+                value={singleTask.StatusId}
               >
                 {renderStatus.map((val) => (
                   <MenuItem value={val.id}>{val.status}</MenuItem>

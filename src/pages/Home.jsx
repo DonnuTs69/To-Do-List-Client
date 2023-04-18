@@ -1,4 +1,4 @@
-import { Box, IconButton, Stack, Typography } from "@mui/material"
+import { Box, IconButton, Typography } from "@mui/material"
 import { axiosInstance } from "../api"
 import { useEffect, useState } from "react"
 import AddIcon from "@mui/icons-material/Add"
@@ -43,16 +43,27 @@ const HomePage = () => {
     getAllList()
   }, [])
   return (
-    <Box>
-      <h1>{dataUser.username}</h1>
-      <Typography variant="h3">All Task List</Typography>
-      <IconButton onClick={handleOpenModal}>
-        <AddIcon />
-      </IconButton>
-      <Box>
+    <Box
+      sx={{
+        width: "fit-content",
+        height: "fit-content",
+        border: "1px solid black",
+        margin: "auto",
+        mt: "50px",
+      }}
+    >
+      <Box textAlign={"center"}>
+        <Typography variant="h3">All Task List</Typography>
+        <IconButton sx={{ alignItems: "center" }} onClick={handleOpenModal}>
+          <AddIcon />
+        </IconButton>
+      </Box>
+      <Box
+        sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2 }}
+      >
         {list.map((item) => (
           <Box
-            width="fit-content"
+            width="200px"
             height="fit-content"
             border="1px solid black"
             borderRadius="10px"
