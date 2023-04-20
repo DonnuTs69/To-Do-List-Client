@@ -1,9 +1,10 @@
-import { Box, IconButton, Typography } from "@mui/material"
+import { Box, Icon, IconButton, Typography } from "@mui/material"
 import { axiosInstance } from "../api"
 import { useEffect, useState } from "react"
 import AddIcon from "@mui/icons-material/Add"
 import CreateList from "../components/CreateList"
 import { Link } from "react-router-dom"
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord"
 
 const HomePage = () => {
   const [dataUser, setDataUser] = useState({})
@@ -27,13 +28,15 @@ const HomePage = () => {
     try {
       const responseList = await axiosInstance.get(`list/all-list`)
       setList(responseList.data.data)
-
-      console.log(responseList.data.data)
     } catch (err) {
       console.log(err)
     }
   }
   //   console.log(dataUser, "state")
+  const statusColors = {
+    "on Progress": "orange",
+    Success: "green",
+  }
 
   useEffect(() => {
     getDataUser()
@@ -47,7 +50,6 @@ const HomePage = () => {
       sx={{
         width: "fit-content",
         height: "fit-content",
-        border: "1px solid black",
         margin: "auto",
         mt: "50px",
       }}
@@ -59,7 +61,12 @@ const HomePage = () => {
         </IconButton>
       </Box>
       <Box
-        sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2 }}
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: 2,
+          padding: "10px",
+        }}
       >
         {list.map((item) => (
           <Box
@@ -70,8 +77,30 @@ const HomePage = () => {
             key={item.id}
           >
             <Link to={`/task/${item.id}`}>
-              <Typography variant="h4">{item.title}</Typography>
+              <Typography
+                variant="h5"
+                sx={{ borderBottom: "1px solid black", textAlign: "center" }}
+              >
+                {item.title && item.title.toUpperCase()}
+              </Typography>
             </Link>
+            {item.Tasks.map((val) => (
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                pl="5px"
+                pr="5px"
+              >
+                <Typography sx={{}}>{val.description}</Typography>
+                <Icon
+                  sx={{
+                    color: statusColors[val.Status.status],
+                  }}
+                >
+                  <FiberManualRecordIcon />
+                </Icon>
+              </Box>
+            ))}
           </Box>
         ))}
       </Box>

@@ -28,7 +28,10 @@ const Navbar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h5"
+            sx={{ flexGrow: 1, textDecorationColor: "white" }}
+          >
             <Link to="/">TDL</Link>
           </Typography>
           {!getToken ? (
@@ -36,8 +39,10 @@ const Navbar = () => {
               <Typography color="white">Login</Typography>
             </Link>
           ) : (
-            <Box>
-              <Typography>{userData ? userData.username : ""}</Typography>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Typography variant="button">
+                {userData ? userData.username : ""}
+              </Typography>
               <Button sx={{ color: "white" }} onClick={logoutBtnHandler}>
                 Logout
               </Button>

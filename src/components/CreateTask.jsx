@@ -2,12 +2,16 @@ import {
   Box,
   Button,
   FormControl,
+  Icon,
+  IconButton,
   Input,
   InputLabel,
   MenuItem,
   Select,
   Typography,
 } from "@mui/material"
+import AddCircleIcon from "@mui/icons-material/AddCircle"
+import LensIcon from "@mui/icons-material/Lens"
 import { useEffect, useState } from "react"
 import { axiosInstance } from "../api"
 import { useParams } from "react-router-dom"
@@ -18,8 +22,6 @@ const CreateTask = () => {
   const [renderTask, setRenderTask] = useState({})
   const [renderStatus, setRenderStatus] = useState([])
   const [taskList, setTaskList] = useState([{ description: "", StatusId: "" }])
-
-  console.log(taskList)
 
   const handleTaskList = () => {
     setTaskList([...taskList, { description: "" }])
@@ -81,11 +83,33 @@ const CreateTask = () => {
     getStatus()
   }, [])
 
+  const statusColors = {
+    "on Progress": "orange",
+    Success: "green",
+  }
+
   return (
-    <Box>
-      <Typography variant="h3">{renderTask.title}</Typography>
-      <Typography>CreateTask</Typography>
-      <Button onClick={() => handleTaskList()}>Add Task</Button>
+    <Box
+      sx={{
+        margin: "auto",
+        width: "fit-content",
+        height: "fit-content",
+        mt: "50px",
+      }}
+    >
+      <Typography variant="h3" textAlign="center">
+        {renderTask.title && renderTask.title.toUpperCase()}
+      </Typography>
+      <Box
+        mt="15px"
+        mb="15px"
+        sx={{ textAlign: "center", borderBottom: "1px solid black" }}
+      >
+        <Typography>Create New Task</Typography>
+        <IconButton onClick={() => handleTaskList()} sx={{ color: "#1976d2" }}>
+          <AddCircleIcon />
+        </IconButton>
+      </Box>
       {taskList.map((singleTask, index) => (
         <Box key={index}>
           <Typography>Input Task</Typography>
@@ -95,7 +119,7 @@ const CreateTask = () => {
               onChange={(e) => handleTaskChange(e, index)}
               name="description"
             />
-            <FormControl sx={{ width: "150px" }}>
+            <FormControl sx={{ width: "180px" }}>
               <InputLabel id="status">Status</InputLabel>
               <Select
                 id="status"
@@ -105,7 +129,19 @@ const CreateTask = () => {
                 value={singleTask.StatusId}
               >
                 {renderStatus.map((val) => (
-                  <MenuItem value={val.id}>{val.status}</MenuItem>
+                  <MenuItem value={val.id}>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <Icon
+                        sx={{
+                          color: statusColors[val.status],
+                          mr: 1,
+                        }}
+                      >
+                        <LensIcon />
+                      </Icon>
+                      {val.status}
+                    </Box>
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -115,7 +151,15 @@ const CreateTask = () => {
           </Box>
         </Box>
       ))}
-      <Button onClick={() => createTask()}>Submit</Button>
+      <Box sx={{ margin: "auto", width: "fit-content", mt: "20px" }}>
+        <Button
+          variant="contained"
+          sx={{ width: "150px" }}
+          onClick={() => createTask()}
+        >
+          Submit
+        </Button>
+      </Box>
     </Box>
   )
 }
