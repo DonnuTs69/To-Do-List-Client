@@ -27,27 +27,30 @@ const Navbar = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
-          <Typography
-            variant="h5"
-            sx={{ flexGrow: 1, textDecorationColor: "white" }}
-          >
-            <Link to="/">TDL</Link>
-          </Typography>
-          {!getToken ? (
-            <Link to="/login">
-              <Typography color="white">Login</Typography>
-            </Link>
-          ) : (
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="button">
-                {userData ? userData.username : ""}
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          <Box>
+            <Link to="/" className="title">
+              <Typography variant="h5" color="red">
+                TDL
               </Typography>
-              <Button sx={{ color: "white" }} onClick={logoutBtnHandler}>
-                Logout
-              </Button>
-            </Box>
-          )}
+            </Link>
+          </Box>
+          <Box>
+            {!getToken ? (
+              <Link to="/login">
+                <Typography color="white">Login</Typography>
+              </Link>
+            ) : (
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography variant="button">
+                  {userData ? userData.username : ""}
+                </Typography>
+                <Button sx={{ color: "white" }} onClick={logoutBtnHandler}>
+                  Logout
+                </Button>
+              </Box>
+            )}
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>

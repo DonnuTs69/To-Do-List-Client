@@ -2,6 +2,7 @@ import { Box, Button, Input, Typography } from "@mui/material"
 import { useState } from "react"
 import { axiosInstance } from "../api"
 import { useNavigate, Link } from "react-router-dom"
+import Navbar from "../components/Navbar"
 
 const Login = () => {
   const [usernameOrEmail, setUsernameOremail] = useState("")
@@ -25,6 +26,7 @@ const Login = () => {
   }
   return (
     <>
+      <Navbar />
       <Box
         top="100px"
         display="grid"
@@ -50,9 +52,16 @@ const Login = () => {
               type="text"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="Pasword"
             />
           </Box>
-          <Button type="submit">Submit</Button>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{ width: "195px", mt: "20px" }}
+          >
+            Submit
+          </Button>
         </form>
         <Typography>Dont have account?</Typography>
         <Link to="/register">

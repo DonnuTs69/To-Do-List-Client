@@ -8,7 +8,7 @@ function App() {
       {/* <Box>
         <Button onClick={logoutBtnHandler}>LogOut</Button>
       </Box> */}
-      <Navbar />
+      {/* <Navbar /> */}
       <ToDoListRoutes />
     </>
   )
