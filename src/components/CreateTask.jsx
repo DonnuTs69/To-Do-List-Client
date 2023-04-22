@@ -69,7 +69,6 @@ const CreateTask = ({ onCreateTask }) => {
         taskList
       )
       // onCreateTask()
-      getList()
       console.log(response)
     } catch (err) {
       console.log(err)
@@ -98,18 +97,12 @@ const CreateTask = ({ onCreateTask }) => {
         mt: "50px",
       }}
     >
-      <Typography variant="h3" textAlign="center">
-        {renderTask.title && renderTask.title.toUpperCase()}
-      </Typography>
-      {renderTask?.Tasks?.map((val) => (
-        <Typography>{val.description}</Typography>
-      ))}
       <Box
         mt="15px"
         mb="15px"
         sx={{ textAlign: "center", borderBottom: "1px solid black" }}
       >
-        <Typography>Create New Task</Typography>
+        <Typography variant="h4">Create New Task</Typography>
         <IconButton onClick={() => handleTaskList()} sx={{ color: "#1976d2" }}>
           <AddCircleIcon />
         </IconButton>

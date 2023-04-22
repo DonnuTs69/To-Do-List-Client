@@ -5,7 +5,6 @@ import AddIcon from "@mui/icons-material/Add"
 import CreateList from "../components/CreateList"
 import { Link } from "react-router-dom"
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord"
-import Navbar from "../components/Navbar"
 
 const HomePage = () => {
   const [dataUser, setDataUser] = useState({})
