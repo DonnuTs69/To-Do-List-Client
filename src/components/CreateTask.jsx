@@ -16,7 +16,7 @@ import { useEffect, useState } from "react"
 import { axiosInstance } from "../api"
 import { useParams } from "react-router-dom"
 
-const CreateTask = () => {
+const CreateTask = ({ onCreateTask }) => {
   const params = useParams()
 
   const [renderTask, setRenderTask] = useState({})
@@ -68,7 +68,8 @@ const CreateTask = () => {
         `/task/create/${params.id}`,
         taskList
       )
-
+      // onCreateTask()
+      getList()
       console.log(response)
     } catch (err) {
       console.log(err)
@@ -100,6 +101,9 @@ const CreateTask = () => {
       <Typography variant="h3" textAlign="center">
         {renderTask.title && renderTask.title.toUpperCase()}
       </Typography>
+      {renderTask?.Tasks?.map((val) => (
+        <Typography>{val.description}</Typography>
+      ))}
       <Box
         mt="15px"
         mb="15px"

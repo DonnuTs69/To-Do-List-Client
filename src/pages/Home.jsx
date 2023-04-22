@@ -51,7 +51,6 @@ const HomePage = () => {
 
   return (
     <>
-      <Navbar />
       <Box
         sx={{
           maxWidth: "fit-content",

@@ -1,5 +1,5 @@
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, Outlet, useNavigate } from "react-router-dom"
 import { axiosInstance } from "../api"
 import { useEffect, useState } from "react"
 
@@ -30,9 +30,7 @@ const Navbar = () => {
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Box>
             <Link to="/" className="title">
-              <Typography variant="h5" color="red">
-                TDL
-              </Typography>
+              <Box component="img" src="/img/tdl.png" sx={{ width: "50px" }} />
             </Link>
           </Box>
           <Box>
@@ -53,6 +51,7 @@ const Navbar = () => {
           </Box>
         </Toolbar>
       </AppBar>
+      <Outlet />
     </Box>
   )
 }

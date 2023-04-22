@@ -26,7 +26,6 @@ const Login = () => {
   }
   return (
     <>
-      <Navbar />
       <Box
         top="100px"
         display="grid"
