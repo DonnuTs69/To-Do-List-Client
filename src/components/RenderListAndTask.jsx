@@ -23,6 +23,7 @@ import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord"
 import EditIcon from "@mui/icons-material/Edit"
 import LensIcon from "@mui/icons-material/Lens"
 import ClearIcon from "@mui/icons-material/Clear"
+import ModalConfirmation from "./ModalConfirmation"
 
 const RenderListAndTask = () => {
   const [renderList, setRenderList] = useState({})
@@ -32,14 +33,9 @@ const RenderListAndTask = () => {
   const [taskId, setTaskId] = useState(null)
   const [renderStatus, setRenderStatus] = useState("")
   const [deleteTask, setDeleteTask] = useState(null)
+  const [openModal, setOpenModal] = useState(false)
 
-  // ===============================
   const [editingTaskId, setEditingTaskId] = useState(null)
-
-  // const toggleVariant = (id) => {
-  //   setVariant(variant === "render" ? "input" : "render")
-  //   setEditingTaskId(editingTaskId === null ? id : null)
-  // }
 
   const toggleVariant = useCallback((id) => {
     setVariant((currentVariant) =>
@@ -113,10 +109,13 @@ const RenderListAndTask = () => {
     "on Progress": "orange",
     Success: "green",
   }
+  const handleOpenModal = () => setOpenModal(true)
+  const handleCloseModal = () => setOpenModal(false)
 
   console.log(taskId)
   console.log(variant)
   console.log(inputDescription, "descripts")
+
   return (
     <>
       <Box sx={{ margin: "auto", minWidth: "fit-content" }}>
@@ -178,9 +177,9 @@ const RenderListAndTask = () => {
                           id={val.id}
                           label="Status"
                           onChange={(e) => setInputStatus(e.target.value)}
-                          // value={inputStatus}
-                          defaultValue={val.Status.status}
-                          sx={{ width: "fit-content", height: "fit-content" }}
+                          defaultValue={val.Status.id}
+                          sx={{ width: "170px", height: "40px" }}
+                          displayEmpty
                         >
                           {renderStatus?.map((val) => (
                             <MenuItem value={val.id}>
@@ -212,8 +211,6 @@ const RenderListAndTask = () => {
                   </TableCell>
                   <TableCell>
                     <IconButton
-                      // key={val.id}
-                      // id={val.id}
                       sx={{ color: "#1976d2" }}
                       onClick={() =>
                         variant === "render"
@@ -230,12 +227,18 @@ const RenderListAndTask = () => {
                       sx={{ color: "red" }}
                       onClick={() =>
                         variant === "render"
-                          ? destroyTask(val.id)
+                          ? handleOpenModal()
                           : toggleVariant(val.id)
                       }
                     >
                       <ClearIcon />
                     </IconButton>
+                    <ModalConfirmation
+                      open={openModal}
+                      handleClose={handleCloseModal}
+                      handleDelete={destroyTask}
+                      taskId={""}
+                    />
                   </TableCell>
                 </TableRow>
               ))}

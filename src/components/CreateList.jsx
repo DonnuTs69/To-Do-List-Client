@@ -1,6 +1,6 @@
 import { Box, Button, Input, Modal, Typography } from "@mui/material"
 import { axiosInstance } from "../api"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 const CreateList = ({ handleClose, open }) => {
   const [title, setTitle] = useState("")
@@ -18,11 +18,12 @@ const CreateList = ({ handleClose, open }) => {
   const listHandler = async (e) => {
     e.preventDefault()
     try {
-      const response = await axiosInstance.post("list/create", {
+      await axiosInstance.post("list/create", {
         title: title,
       })
-      window.location.reload()
-      console.log(response)
+
+      // window.location.reload()
+      handleClose()
     } catch (err) {
       console.log(err)
     }

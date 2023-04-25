@@ -32,7 +32,9 @@ const Login = () => {
         margin="auto"
         justifyContent="center"
         position="relative"
-        sx={{ width: "500px" }}
+        sx={{
+          width: "500px",
+        }}
         border="1px solid red"
       >
         <Typography variant="h3" gutterBottom>

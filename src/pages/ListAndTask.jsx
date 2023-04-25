@@ -23,11 +23,7 @@ const ListAndTask = () => {
         <Tab icon={<AddCircleIcon />} label="create" />
       </Tabs>
       {value === 0 && <RenderListAndTask />}
-      {value === 1 && (
-        <CreateTask
-        //    onCreateTask={handleCreateTask}
-        />
-      )}
+      {value === 1 && <CreateTask onCreateTask={handleCreateTask} />}
     </Box>
   )
 }

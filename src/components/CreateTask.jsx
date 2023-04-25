@@ -68,7 +68,7 @@ const CreateTask = ({ onCreateTask }) => {
         `/task/create/${params.id}`,
         taskList
       )
-      // onCreateTask()
+      onCreateTask()
       console.log(response)
     } catch (err) {
       console.log(err)
@@ -103,9 +103,6 @@ const CreateTask = ({ onCreateTask }) => {
         sx={{ textAlign: "center", borderBottom: "1px solid black" }}
       >
         <Typography variant="h4">Create New Task</Typography>
-        <IconButton onClick={() => handleTaskList()} sx={{ color: "#1976d2" }}>
-          <AddCircleIcon />
-        </IconButton>
       </Box>
       {taskList.map((singleTask, index) => (
         <Box key={index}>
@@ -115,6 +112,7 @@ const CreateTask = ({ onCreateTask }) => {
               value={singleTask.description}
               onChange={(e) => handleTaskChange(e, index)}
               name="description"
+              autoFocus={true}
             />
             <FormControl sx={{ width: "180px" }}>
               <InputLabel id="status">Status</InputLabel>
@@ -148,7 +146,17 @@ const CreateTask = ({ onCreateTask }) => {
           </Box>
         </Box>
       ))}
-      <Box sx={{ margin: "auto", width: "fit-content", mt: "20px" }}>
+      <Box
+        sx={{
+          margin: "auto",
+          width: "fit-content",
+          mt: "20px",
+          display: "grid",
+        }}
+      >
+        <IconButton onClick={() => handleTaskList()} sx={{ color: "#1976d2" }}>
+          <AddCircleIcon />
+        </IconButton>
         <Button
           variant="contained"
           sx={{ width: "150px" }}
