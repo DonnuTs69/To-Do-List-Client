@@ -7,6 +7,7 @@ import CreateList from "./components/CreateList"
 import CreateTask from "./components/CreateTask"
 import Navbar from "./components/Navbar"
 import ListAndTask from "./pages/ListAndTask"
+import Auth from "./pages/Auth"
 
 const ToDoListRoutes = () => {
   return (
@@ -26,6 +27,7 @@ const ToDoListRoutes = () => {
             <Route path="/login" element={<Login />} />
             {/* <Route path="/list" element={<CreateList />} /> */}
             <Route path="/task/:id" element={<ListAndTask />} />
+            <Route path="/Auth" element={<Auth />} />
           </Route>
         </Routes>
       </main>

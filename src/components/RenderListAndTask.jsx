@@ -84,11 +84,10 @@ const RenderListAndTask = () => {
 
   const destroyTask = async () => {
     try {
-      await axiosInstance.delete("/task/delete/", {
-        id: deleteTask,
-      })
+      console.log(deleteTask, "asu")
+      await axiosInstance.delete(`/task/delete/${deleteTask}`)
       getList()
-      toggleVariant()
+      handleCloseModal()
     } catch (err) {
       console.log(err)
     }
@@ -108,10 +107,12 @@ const RenderListAndTask = () => {
   }
   const handleOpenModal = useCallback((id) => {
     setOpenModal(true)
-    setDeleteTask(deleteTask === null ? id : null)
+    // setDeleteTask(deleteTask === null ? id : null)
+    setDeleteTask(id)
+    console.log(id)
   })
   const handleCloseModal = () => setOpenModal(false)
-  console.log(deleteTask, "delId")
+  // console.log(deleteTask, "delId")
 
   return (
     <>
@@ -215,7 +216,7 @@ const RenderListAndTask = () => {
                       sx={{ color: "red" }}
                       onClick={() =>
                         variant === "render"
-                          ? handleOpenModal()
+                          ? handleOpenModal(val.id)
                           : toggleVariant(val.id)
                       }
                     >

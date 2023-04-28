@@ -1,13 +1,20 @@
 import { Box, Button, Input, TextField, Typography } from "@mui/material"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { axiosInstance } from "../api"
 import { useNavigate, Link } from "react-router-dom"
 import Image from "../assets/to-do-list.jpg"
 
-const Login = () => {
+const Auth = () => {
   const [usernameOrEmail, setUsernameOremail] = useState("")
   const [password, setPassword] = useState("")
+  const [variant, setVariant] = useState("login")
   const navigate = useNavigate()
+
+  const toggleVariant = useCallback(() => {
+    setVariant((currentVariant) =>
+      currentVariant === "login" ? "register" : "login"
+    )
+  })
 
   const loginUser = async (e) => {
     e.preventDefault()
@@ -94,4 +101,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Auth
