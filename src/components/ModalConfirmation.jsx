@@ -24,7 +24,9 @@ const ModalConfirmation = ({ open, handleClose, handleDelete, taskId }) => {
           Are You Sure Want to Delete This Task?
         </Typography>
         <Box display="flex">
-          <Button onClick={handleDelete(taskId)}>Delete</Button>
+          <Button onClick={() => handleDelete(taskId)} id={taskId}>
+            Delete
+          </Button>
           <Button onClick={() => handleClose()}>Cancel</Button>
         </Box>
       </Box>

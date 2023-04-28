@@ -43,7 +43,6 @@ const RenderListAndTask = () => {
     )
     setEditingTaskId(editingTaskId === null ? id : null)
     setTaskId(taskId === null ? id : null)
-    setDeleteTask(deleteTask === null ? id : null)
   })
 
   const params = useParams()
@@ -67,7 +66,6 @@ const RenderListAndTask = () => {
   }
 
   const editTaskAndStatus = async () => {
-    // e.preventDefault()
     try {
       await axiosInstance.patch("/task/edit", {
         description: inputDescription,
@@ -86,10 +84,9 @@ const RenderListAndTask = () => {
 
   const destroyTask = async () => {
     try {
-      await axiosInstance.delete("/task/delete", {
+      await axiosInstance.delete("/task/delete/", {
         id: deleteTask,
       })
-
       getList()
       toggleVariant()
     } catch (err) {
@@ -99,7 +96,7 @@ const RenderListAndTask = () => {
 
   useEffect(() => {
     getList()
-  }, [])
+  }, [deleteTask])
 
   useEffect(() => {
     getStatus()
@@ -109,12 +106,12 @@ const RenderListAndTask = () => {
     "on Progress": "orange",
     Success: "green",
   }
-  const handleOpenModal = () => setOpenModal(true)
+  const handleOpenModal = useCallback((id) => {
+    setOpenModal(true)
+    setDeleteTask(deleteTask === null ? id : null)
+  })
   const handleCloseModal = () => setOpenModal(false)
-
-  console.log(taskId)
-  console.log(variant)
-  console.log(inputDescription, "descripts")
+  console.log(deleteTask, "delId")
 
   return (
     <>
@@ -124,14 +121,16 @@ const RenderListAndTask = () => {
           sx={{
             fontWeight: "bold",
             textAlign: "center",
-            borderBottom: "2px solid black",
+            // borderBottom: "2px solid black",
             mt: "50px",
           }}
         >
           {renderList?.title?.toUpperCase()}
         </Typography>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: "500" }}>
+          <Table
+            sx={{ minWidth: "500", borderTop: "2px solid black", mt: "20px" }}
+          >
             <TableHead>
               <TableRow>
                 <TableCell sx={{ fontWeight: "bold" }}>Description</TableCell>
@@ -145,17 +144,6 @@ const RenderListAndTask = () => {
             <TableBody>
               {renderList?.Tasks?.map((val) => (
                 <TableRow key={val.id}>
-                  {/* {variant === "render" || variant !== val.id ? (
-                    <TableCell>{val.description}</TableCell>
-                  ) : (
-                    <TableCell>
-                      <Input
-                        defaultValue={val.description}
-                        key={val.id}
-                        id={val.id}
-                      />
-                    </TableCell>
-                  )} */}
                   <TableCell sx={{ width: 250 }}>
                     {val.id === editingTaskId ? (
                       <Input
@@ -233,12 +221,14 @@ const RenderListAndTask = () => {
                     >
                       <ClearIcon />
                     </IconButton>
-                    <ModalConfirmation
-                      open={openModal}
-                      handleClose={handleCloseModal}
-                      handleDelete={destroyTask}
-                      taskId={""}
-                    />
+                    {val.id === deleteTask ? null : (
+                      <ModalConfirmation
+                        open={openModal}
+                        handleClose={handleCloseModal}
+                        handleDelete={destroyTask}
+                        taskId={val.id}
+                      />
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
