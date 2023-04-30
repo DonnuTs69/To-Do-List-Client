@@ -23,8 +23,6 @@ const ToDoListRoutes = () => {
                 </ProtectRoute>
               }
             />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
             {/* <Route path="/list" element={<CreateList />} /> */}
             <Route path="/task/:id" element={<ListAndTask />} />
             <Route path="/Auth" element={<Auth />} />

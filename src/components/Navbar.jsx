@@ -5,24 +5,32 @@ import { useEffect, useState } from "react"
 
 const Navbar = () => {
   const [userData, setUserData] = useState({})
+  const [isLogin, setIsLogin] = useState(false)
 
   const navigate = useNavigate()
 
-  const getToken = localStorage.getItem("auth_token")
-
   const getUserData = async () => {
     const response = await axiosInstance.get("/auth/profile")
-    setUserData(response.data)
+    setIsLogin(true)
+    setUserData(response?.data)
   }
 
   useEffect(() => {
-    getUserData()
+    const getToken = localStorage.getItem("auth_token")
+    if (getToken) {
+      setIsLogin(true)
+      getUserData()
+    }
   }, [])
 
   const logoutBtnHandler = () => {
     localStorage.removeItem("auth_token")
-    navigate("/login")
+    navigate("/auth")
   }
+
+  // useEffect(() => {
+  //   getUserData()
+  // }, [])
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -34,8 +42,8 @@ const Navbar = () => {
             </Link>
           </Box>
           <Box>
-            {!getToken ? (
-              <Link to="/login">
+            {!isLogin ? (
+              <Link to="/auth">
                 <Typography color="white">Login</Typography>
               </Link>
             ) : (

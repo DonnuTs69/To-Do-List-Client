@@ -37,6 +37,9 @@ const RenderListAndTask = () => {
 
   const [editingTaskId, setEditingTaskId] = useState(null)
 
+  console.log(inputStatus)
+  console.log(inputDescription)
+
   const toggleVariant = useCallback((id) => {
     setVariant((currentVariant) =>
       currentVariant === "render" ? "edit" : "render"
@@ -75,8 +78,6 @@ const RenderListAndTask = () => {
 
       getList()
       toggleVariant()
-      // setVariant("render")
-      // setTaskId(null)
     } catch (err) {
       console.log(err)
     }
@@ -95,11 +96,13 @@ const RenderListAndTask = () => {
 
   useEffect(() => {
     getList()
-  }, [deleteTask])
+  }, [])
 
   useEffect(() => {
     getStatus()
   }, [])
+
+  console.log(taskId)
 
   const statusColors = {
     "on Progress": "orange",
@@ -204,9 +207,9 @@ const RenderListAndTask = () => {
                       onClick={() =>
                         variant === "render"
                           ? toggleVariant(val.id)
-                          : editTaskAndStatus() && setTaskId(null)
+                          : editTaskAndStatus() && setTaskId(val.id)
                       }
-                      type={variant === "render" ? null : "submit"}
+                      // type={variant === "render" ? null : "submit"}
                     >
                       <EditIcon />
                     </IconButton>
