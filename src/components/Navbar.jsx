@@ -45,20 +45,20 @@ const Navbar = () => {
             </Link>
           </Box>
           <Box>
-            {!isLogin ? (
-              <Link to="/auth">
-                <Typography color="white">Login</Typography>
-              </Link>
-            ) : (
+            {currentUser ? (
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Typography variant="button">
                   {/* {userData ? userData.username : ""} */}
-                  {/* {currentUser} */}
+                  {/* {currentUser.username} */}
                 </Typography>
                 <Button sx={{ color: "white" }} onClick={logoutBtnHandler}>
                   Logout
                 </Button>
               </Box>
+            ) : (
+              <Link to="/auth">
+                <Typography color="white">Login</Typography>
+              </Link>
             )}
           </Box>
         </Toolbar>

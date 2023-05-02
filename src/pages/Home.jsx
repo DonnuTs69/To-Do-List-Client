@@ -46,7 +46,7 @@ const HomePage = () => {
     getAllList()
   }, [])
 
-  console.log(list)
+  // console.log(list)
 
   return (
     <>

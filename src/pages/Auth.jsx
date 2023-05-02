@@ -11,7 +11,7 @@ const Auth = () => {
   const [emaiInput, setEmaiInput] = useState("")
   const [password, setPassword] = useState("")
   const [variant, setVariant] = useState("login")
-  const { setCurrentUser } = useContext(UserContext)
+  const { setCurrentUser, currentUser } = useContext(UserContext)
   const navigate = useNavigate()
 
   const toggleVariant = useCallback(() => {
@@ -27,9 +27,11 @@ const Auth = () => {
         usernameOrEmail: usernameOrEmail,
         password: password,
       })
-      setCurrentUser(response.data)
+      setCurrentUser(response.data.data)
       localStorage.setItem("auth_token", response.data.token)
+      localStorage.setItem("current_user", JSON.stringify(currentUser))
 
+      console.log(JSON.stringify(currentUser))
       navigate("/")
     } catch (err) {
       console.log(err)
