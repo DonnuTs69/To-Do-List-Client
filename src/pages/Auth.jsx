@@ -1,8 +1,9 @@
+import { useCallback, useState, useContext } from "react"
 import { Box, Button, Input, TextField, Typography } from "@mui/material"
-import { useCallback, useState } from "react"
 import { axiosInstance } from "../api"
 import { useNavigate, Link } from "react-router-dom"
 import Image from "../assets/to-do-list.jpg"
+import { UserContext } from "../context/userContext"
 
 const Auth = () => {
   const [usernameOrEmail, setUsernameOremail] = useState("")
@@ -10,6 +11,7 @@ const Auth = () => {
   const [emaiInput, setEmaiInput] = useState("")
   const [password, setPassword] = useState("")
   const [variant, setVariant] = useState("login")
+  const { setCurrentUser } = useContext(UserContext)
   const navigate = useNavigate()
 
   const toggleVariant = useCallback(() => {
@@ -25,7 +27,7 @@ const Auth = () => {
         usernameOrEmail: usernameOrEmail,
         password: password,
       })
-
+      setCurrentUser(response.data)
       localStorage.setItem("auth_token", response.data.token)
 
       navigate("/")

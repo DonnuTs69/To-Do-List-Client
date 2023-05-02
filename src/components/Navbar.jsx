@@ -1,11 +1,13 @@
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material"
 import { Link, Outlet, useNavigate } from "react-router-dom"
 import { axiosInstance } from "../api"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
+import { UserContext } from "../context/userContext"
 
 const Navbar = () => {
   const [userData, setUserData] = useState({})
   const [isLogin, setIsLogin] = useState(false)
+  const { currentUser } = useContext(UserContext)
 
   const navigate = useNavigate()
 
@@ -28,6 +30,7 @@ const Navbar = () => {
     navigate("/auth")
   }
 
+  console.log(currentUser)
   // useEffect(() => {
   //   getUserData()
   // }, [])
@@ -49,7 +52,8 @@ const Navbar = () => {
             ) : (
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Typography variant="button">
-                  {userData ? userData.username : ""}
+                  {/* {userData ? userData.username : ""} */}
+                  {/* {currentUser} */}
                 </Typography>
                 <Button sx={{ color: "white" }} onClick={logoutBtnHandler}>
                   Logout
