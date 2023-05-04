@@ -11,7 +11,9 @@ const Auth = () => {
   const [emaiInput, setEmaiInput] = useState("")
   const [password, setPassword] = useState("")
   const [variant, setVariant] = useState("login")
+
   const { setCurrentUser, currentUser } = useContext(UserContext)
+
   const navigate = useNavigate()
 
   const toggleVariant = useCallback(() => {
@@ -29,9 +31,9 @@ const Auth = () => {
       })
       setCurrentUser(response.data.data)
       localStorage.setItem("auth_token", response.data.token)
-      localStorage.setItem("current_user", JSON.stringify(currentUser))
+      localStorage.setItem("current_user", JSON.stringify(response.data.data))
 
-      console.log(JSON.stringify(currentUser))
+      console.log(JSON.stringify())
       navigate("/")
     } catch (err) {
       console.log(err)
@@ -178,6 +180,7 @@ const Auth = () => {
             // type="submit"
             onClick={variant === "login" ? loginUser : registerUser}
             variant="contained"
+            type="submit"
             sx={{ width: "350px", height: "50px" }}
           >
             {variant === "login" ? "Login" : "Sign up"}
