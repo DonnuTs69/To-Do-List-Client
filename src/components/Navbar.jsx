@@ -4,15 +4,18 @@ import { useContext } from "react"
 import { UserContext } from "../context/userContext"
 
 const Navbar = () => {
-  const { currentUser } = useContext(UserContext)
+  const { currentUser, setCurrentUser } = useContext(UserContext)
 
   const navigate = useNavigate()
 
   const logoutBtnHandler = () => {
-    localStorage.clear()
+    localStorage.removeItem("auth_token")
+    localStorage.removeItem("current_user")
+    setCurrentUser(null)
     navigate("/auth")
   }
 
+  console.log(currentUser)
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">

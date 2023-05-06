@@ -1,19 +1,9 @@
-import { Box, Button, Input, Modal, Typography } from "@mui/material"
+import { Box, Button, TextField, Modal, Typography } from "@mui/material"
 import { axiosInstance } from "../api"
 import { useState } from "react"
 
 const CreateList = ({ handleClose, open }) => {
   const [title, setTitle] = useState("")
-  // const [openModal, setOpenModal] = useState(open)
-
-  // const handleCloseModal = () => {
-  //   setOpenModal(false)
-  //   handleClose()
-  // }
-
-  // useEffect(() => {
-  //   setOpenModal(open)
-  // }, [open])
 
   const listHandler = async (e) => {
     e.preventDefault()
@@ -22,15 +12,12 @@ const CreateList = ({ handleClose, open }) => {
         title: title,
       })
 
-      // window.location.reload()
       handleClose()
     } catch (err) {
       console.log(err)
     }
   }
 
-  // console.log(open)
-  // console.log(handleClose)
   return (
     <Modal
       open={open}
@@ -47,18 +34,31 @@ const CreateList = ({ handleClose, open }) => {
           bgcolor: "background.paper",
           border: "1px solid white",
           boxShadow: 24,
+          display: "grid",
+          borderRadius: "5px",
         }}
       >
-        <Typography variant="h4" color="red" id="keep-mounted-modal-title">
-          Create List
-        </Typography>
-        <Input
-          id="keep-mounted-modal-description"
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <Button onClick={listHandler} type="submit">
-          submit
-        </Button>
+        <Box sx={{ placeSelf: "center" }}>
+          <Typography variant="h4" color="black" id="keep-mounted-modal-title">
+            Create List
+          </Typography>
+          <TextField
+            id="keep-mounted-modal-description"
+            onChange={(e) => setTitle(e.target.value)}
+            label="List"
+            sx={{ width: "fit-content", mt: "10px" }}
+          />
+          <Box>
+            <Button
+              variant="contained"
+              onClick={listHandler}
+              type="submit"
+              sx={{ width: "222px", mt: "10px", mb: "15px" }}
+            >
+              submit
+            </Button>
+          </Box>
+        </Box>
       </Box>
     </Modal>
   )
