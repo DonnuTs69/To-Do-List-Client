@@ -5,6 +5,8 @@ import { UserContext } from "../context/userContext"
 const ProtectRoute = ({ children }) => {
   const { currentUser } = useContext(UserContext)
 
+  console.log(currentUser)
+
   if (!currentUser) {
     return <Navigate replace to="/auth" />
   }

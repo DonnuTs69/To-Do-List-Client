@@ -27,9 +27,9 @@ const CreateList = ({ handleClose, open }) => {
     >
       <Box
         sx={{
-          position: "absolute",
-          top: "50%",
-          left: "35%",
+          position: "relative",
+          top: "30%",
+          margin: "auto",
           width: 400,
           bgcolor: "background.paper",
           border: "1px solid white",
@@ -39,21 +39,26 @@ const CreateList = ({ handleClose, open }) => {
         }}
       >
         <Box sx={{ placeSelf: "center" }}>
-          <Typography variant="h4" color="black" id="keep-mounted-modal-title">
+          <Typography
+            sx={{ mt: "20px" }}
+            variant="h4"
+            color="black"
+            id="keep-mounted-modal-title"
+          >
             Create List
           </Typography>
           <TextField
             id="keep-mounted-modal-description"
             onChange={(e) => setTitle(e.target.value)}
             label="List"
-            sx={{ width: "fit-content", mt: "10px" }}
+            sx={{ width: "300px", mt: "10px", height: "fit-content" }}
           />
           <Box>
             <Button
               variant="contained"
               onClick={listHandler}
               type="submit"
-              sx={{ width: "222px", mt: "10px", mb: "15px" }}
+              sx={{ width: "300px", mt: "30px", mb: "30px" }}
             >
               submit
             </Button>

@@ -1,10 +1,12 @@
-import { useCallback, useState, useContext } from "react"
-import { Box, Button, Input, Typography } from "@mui/material"
+import { useCallback, useState, useContext, useEffect } from "react"
+import { Box, Button, IconButton, Input, Typography } from "@mui/material"
 import { axiosInstance } from "../api"
 import { useNavigate, Link } from "react-router-dom"
 import Image from "../assets/to-do-list.jpg"
 import { UserContext } from "../context/userContext"
 import SnackbarAlert from "../components/SnackbarAlert"
+import VisibilityIcon from "@mui/icons-material/Visibility"
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 
 const Auth = () => {
   const [usernameOrEmail, setUsernameOremail] = useState("")
@@ -16,6 +18,8 @@ const Auth = () => {
   const [open, setOpen] = useState(false)
   const [alertMessage, setAlertMessage] = useState("")
   const [alertStatus, setAlertStatus] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  const [disableButton, setDisableButton] = useState(false)
 
   const { setCurrentUser } = useContext(UserContext)
 
@@ -26,6 +30,10 @@ const Auth = () => {
       currentVariant === "login" ? "register" : "login"
     )
   })
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword)
+  }
 
   const handleAlertClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -44,10 +52,12 @@ const Auth = () => {
       localStorage.setItem("auth_token", response.data.token)
       localStorage.setItem("current_user", JSON.stringify(response.data.data))
 
-      navigate("/")
+      setOpen(true)
       setAlertMessage("Login success")
       setAlertStatus("success")
-      setOpen(true)
+      setTimeout(() => {
+        navigate("/")
+      }, 500)
     } catch (err) {
       console.log(err)
       setAlertMessage("Username or email not found")
@@ -69,7 +79,6 @@ const Auth = () => {
           password: password,
         })
 
-        // setVariant("login")
         setAlertMessage("User successfull created")
         setAlertStatus("success")
         setOpen(true)
@@ -86,6 +95,10 @@ const Auth = () => {
       setOpen(true)
     }
   }
+
+  useEffect(() => {
+    setDisableButton(password !== confirmPassword)
+  }, [password, confirmPassword])
 
   return (
     <>
@@ -111,7 +124,6 @@ const Auth = () => {
             width: "600px",
             background: "black",
             height: "fit-content",
-            // backgroundColor: "transparent",
             opacity: "0.7",
             borderRadius: "5px",
           }}
@@ -189,53 +201,72 @@ const Auth = () => {
               </>
             )}
             <Typography color={"white"}>Password</Typography>
-            <Input
-              type="text"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Pasword"
-              components={Input}
-              sx={{
-                fontSize: "16px",
-                fontFamily: "inherit",
-                padding: "0.25em 0.5em",
-                backgroundColor: "#fff",
-                border: "2px solid white",
-                borderRadius: "4px",
-                width: "350px",
-                height: "50px",
-                mb: 1,
-              }}
-            />
+
+            <Box display={"flex"}>
+              <Input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Pasword"
+                components={Input}
+                sx={{
+                  fontSize: "16px",
+                  fontFamily: "inherit",
+                  padding: "0.25em 0.5em",
+                  backgroundColor: "#fff",
+                  border: "2px solid white",
+                  borderRadius: "4px",
+                  width: "350px",
+                  height: "50px",
+                  mb: 1,
+                }}
+              />
+              <IconButton
+                color="default"
+                onClick={() => toggleShowPassword()}
+                sx={{ right: 45 }}
+              >
+                {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+              </IconButton>
+            </Box>
             {variant === "register" && (
               <>
                 <Typography color={"white"}>Confirm password</Typography>
-                <Input
-                  type="text"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Confirm password"
-                  components={Input}
-                  sx={{
-                    fontSize: "16px",
-                    fontFamily: "inherit",
-                    padding: "0.25em 0.5em",
-                    backgroundColor: "#fff",
-                    border: "2px solid white",
-                    borderRadius: "4px",
-                    width: "350px",
-                    height: "50px",
-                    mb: 1,
-                  }}
-                />
+                <Box display={"flex"}>
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Confirm password"
+                    components={Input}
+                    sx={{
+                      fontSize: "16px",
+                      fontFamily: "inherit",
+                      padding: "0.25em 0.5em",
+                      backgroundColor: "#fff",
+                      border: "2px solid white",
+                      borderRadius: "4px",
+                      width: "350px",
+                      height: "50px",
+                      mb: 1,
+                    }}
+                  />
+                  <IconButton
+                    color="default"
+                    onClick={() => toggleShowPassword()}
+                    sx={{ right: 45 }}
+                  >
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </IconButton>
+                </Box>
               </>
             )}
           </Box>
           <Button
-            // type="submit"
             onClick={variant === "login" ? loginUser : registerUser}
             variant="contained"
             type="submit"
+            // disabled={disableButton}
             sx={{ width: "350px", height: "50px", mt: 2 }}
           >
             {variant === "login" ? "Login" : "Sign up"}

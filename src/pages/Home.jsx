@@ -2,6 +2,7 @@ import { Box, Icon, IconButton, Typography } from "@mui/material"
 import { axiosInstance } from "../api"
 import { useEffect, useState } from "react"
 import AddIcon from "@mui/icons-material/Add"
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline"
 import CreateList from "../components/CreateList"
 import { Link } from "react-router-dom"
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord"
@@ -32,7 +33,6 @@ const HomePage = () => {
       console.log(err)
     }
   }
-  //   console.log(dataUser, "state")
   const statusColors = {
     "on Progress": "orange",
     Success: "green",
@@ -46,8 +46,6 @@ const HomePage = () => {
     getAllList()
   }, [])
 
-  // console.log(list)
-
   return (
     <>
       <Box
@@ -60,7 +58,10 @@ const HomePage = () => {
       >
         <Box textAlign={"center"}>
           <Typography variant="h3">All Task List</Typography>
-          <IconButton sx={{ alignItems: "center" }} onClick={handleOpenModal}>
+          <IconButton
+            sx={{ alignItems: "center", color: "#1976d2" }}
+            onClick={handleOpenModal}
+          >
             <AddIcon />
           </IconButton>
         </Box>
@@ -110,23 +111,44 @@ const HomePage = () => {
                   },
                 }}
               >
-                {item.Tasks.map((val) => (
+                {Object.keys(item.Tasks).length === 0 ? (
                   <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    pl="5px"
-                    pr="5px"
+                    margin="auto"
+                    sx={{
+                      position: "relative",
+                      width: "fit-content",
+                      height: "fit-content",
+                      top: "27%",
+                      display: "grid",
+                      textAlign: "center",
+                    }}
                   >
-                    <Typography sx={{}}>{val.description}</Typography>
-                    <Icon
-                      sx={{
-                        color: statusColors[val.Status.status],
-                      }}
-                    >
-                      <FiberManualRecordIcon />
-                    </Icon>
+                    <Typography>Create some task</Typography>
+                    <Link to={`/task/${item.id}`}>
+                      <IconButton sx={{ color: "#1976d2" }}>
+                        <AddCircleOutlineIcon />
+                      </IconButton>
+                    </Link>
                   </Box>
-                ))}
+                ) : (
+                  item.Tasks.map((val) => (
+                    <Box
+                      display="flex"
+                      justifyContent="space-between"
+                      pl="5px"
+                      pr="5px"
+                    >
+                      <Typography sx={{}}>{val.description}</Typography>
+                      <Icon
+                        sx={{
+                          color: statusColors[val.Status.status],
+                        }}
+                      >
+                        <FiberManualRecordIcon />
+                      </Icon>
+                    </Box>
+                  ))
+                )}
               </Box>
             </Box>
           ))}
